@@ -42,7 +42,11 @@
     "socket.io": "^2.0.4"
   },
   "devDependencies": {
+    "babel-eslint": "^8.2.1",
     "eslint": "^4.16.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-babel": "^4.1.2",
+    "eslint-plugin-import": "^2.8.0",
     "jest": "^22.1.4",
     "nodemon": "^1.14.12"
   }

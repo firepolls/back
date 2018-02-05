@@ -4,7 +4,7 @@ import Room from './room';
 
 const state = {
   rooms: {},
-  owners:{},
+  owners: {},
 };
 
 export default server => {

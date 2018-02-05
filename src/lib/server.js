@@ -16,11 +16,12 @@ const state = {
 
 export const start = () => {
   return new Promise((resolve, reject) => {
-    if(state.isOn)
+    if (state.isOn) {
       return reject(new Error('__ERROR__ Server is already on'));
+    }
 
     state.isOn = true;
-    db.connect()
+    return db.connect()
       .then(() => {
         const http = Server(app);
         socket(http);
@@ -36,8 +37,9 @@ export const start = () => {
 
 export const stop = () => {
   return new Promise((resolve, reject) => {
-    if(!state.isOn)
+    if (!state.isOn) {
       return reject(new Error('__ERROR__ Server is already off'));
+    }
 
     return db.disconnect()
       .then(() => {
