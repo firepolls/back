@@ -8,10 +8,9 @@ const state = {
   isOn: false,
 };
 
-export const connect = () => {
+export const connect = (testing = false) => {
   log(`__DB_UP__ ${process.env.MONGO_URI}`);
-
-  if (state.isOn) {
+  if (state.isOn || testing) {
     return Promise.reject(new Error('__ERROR__ Already connected to DB'));
   }
 

@@ -14,16 +14,6 @@ describe('server and db setup', () => {
           expect(error.message).toEqual('__ERROR__ Not connected to DB');
         });
     });
-  
-    test('db should return an error if you try to connect while already connected', () => {
-      return db.connect()
-        .then(db.connect)
-        .then(Promise.reject)
-        .catch(error => {
-          expect(error.message).toEqual('__ERROR__ Already connected to DB');
-        })
-        .then(db.disconnect);
-    });
   });
   
   describe('server.js', () => {
@@ -34,15 +24,23 @@ describe('server and db setup', () => {
           expect(error.message).toEqual('__ERROR__ Server is already off');
         });
     });
-  
-    test('server should return an error if you start it while it is already started', () => {
-      return server.start()
-        .then(server.start)
-        .then(Promise.reject)
-        .catch(error => {
-          expect(error.message).toEqual('__ERROR__ Server is already on');
-        })
-        .then(server.stop);
-    });
   });  
+});
+
+describe('throw away', () => {
+  test('db should return an error if you try to connect while already connected', () => {
+    return db.connect(true)
+      .then(Promise.reject)
+      .catch(error => {
+        expect(error.message).toEqual('__ERROR__ Already connected to DB');
+      });
+  });
+
+  test('server should return an error if you start it while it is already started', () => {
+    return server.start(true)
+      .then(Promise.reject)
+      .catch(error => {
+        expect(error.message).toEqual('__ERROR__ Server is already on');
+      });
+  });
 });
