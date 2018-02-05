@@ -1,7 +1,8 @@
 'use strict';
 
-import { log } from './util';
 import mongoose from 'mongoose';
+
+import { log } from './util';
 
 const state = {
   isOn: false,
@@ -21,7 +22,7 @@ export const connect = () => {
 export const disconnect = () => {
   log('__DB_DOWN__');
   if (!state.isOn) {
-    return Promise.disconnect(new Error('__ERROR__ Not connected to DB'));
+    return Promise.reject(new Error('__ERROR__ Not connected to DB'));
   }
   
   state.isOn = false;
