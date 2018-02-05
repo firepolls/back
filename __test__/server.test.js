@@ -2,8 +2,6 @@
 
 require('./lib/setup');
 
-import mongoose from 'mongoose';
-
 import * as db from '../src/lib/db';
 import * as server from '../src/lib/server';
 
