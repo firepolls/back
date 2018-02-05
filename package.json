@@ -1,5 +1,5 @@
 {
-  "name": "firepolls-back",
+  "name": "fire-polls-back",
   "version": "1.0.0",
   "description": "firepolls.com back end REST API and Socket.io",
   "main": "index.js",
