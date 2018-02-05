@@ -32,9 +32,9 @@ export default server => {
     
     client.on('create room', roomName => {
       if (state.rooms[roomName]) {
-        client.emit('room conflict', roomName);
+        client.emit('room conflict', `The room "${roomName} is unavailable".`);
       } else {
-        client.emit('room created', `You have just created the room "${roomName}".`);
+        client.emit('room created', roomName);
         // TODO: on client side this must dispatch set state for room
         // TODO: add check to make sure you don't already own a room
         // Rob - create the room and add to info to the two maps
