@@ -14,14 +14,14 @@ const state = {
   http: null,
 };
 
-export const start = () => {
+export const start = (testing = false) => {
   return new Promise((resolve, reject) => {
-    if (state.isOn) {
+    if (state.isOn || testing) {
       return reject(new Error('__ERROR__ Server is already on'));
     }
 
     state.isOn = true;
-    return db.connect()
+    return db.connect(testing)
       .then(() => {
         const http = Server(app);
         socket(http);
