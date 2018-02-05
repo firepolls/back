@@ -1,0 +1,49 @@
+{
+  "name": "firepolls-back",
+  "version": "1.0.0",
+  "description": "firepolls.com back end REST API and Socket.io",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest -i --coverage",
+    "lint": "eslint .",
+    "start": "node index.js",
+    "dbon": "mkdir -p ./db && mongod --dbpath ./db",
+    "dboff": "killall mongod",
+    "watch": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/firepolls/back.git"
+  },
+  "keywords": [
+    "poll",
+    "quiz",
+    "test",
+    "formative",
+    "data"
+  ],
+  "author": "Anthony Robinson && Pedja Josifovic && Kerry Nordstrom && Seth Donohue && Robert Reed",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/firepolls/back/issues"
+  },
+  "homepage": "https://github.com/firepolls/back#readme",
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0",
+    "bcrypt": "^1.0.3",
+    "cors": "^2.8.4",
+    "dotenv": "^5.0.0",
+    "express": "^4.16.2",
+    "http-errors": "^1.6.2",
+    "jsonwebtoken": "^8.1.1",
+    "mongoose": "^5.0.2",
+    "socket.io": "^2.0.4"
+  },
+  "devDependencies": {
+    "eslint": "^4.16.0",
+    "jest": "^22.1.4",
+    "nodemon": "^1.14.12"
+  }
+}
