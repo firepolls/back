@@ -27,9 +27,9 @@ class Room {
       .filter(currentVoter => currentVoter.id !== voter.id);
   }
 
-  sendPoll(message) {
+  sendPoll(question) {
     this.owner.broadcast.to(this.roomName).emit('poll inbound', {
-      message,
+      question,
       room: this.roomName,
     });
   }

@@ -13,7 +13,7 @@ export default server => {
   };
 
   // Rob - Only allow connections from OUR front end when in production
-  const io = process.env.DEBUG === 'true' ? 
+  const io = process.env.DEBUG === 'true' ?
     socketIO(server) : socketIO(server, options);
 
   io.on('connection', client => {
@@ -25,11 +25,11 @@ export default server => {
       // Rob - if disconnecting client owns any rooms, shut down that room
       const ownedRoom = state.owners[client.id];
       if (ownedRoom) {
-        state.rooms[ownedRoom].closeRoom(); 
+        state.rooms[ownedRoom].closeRoom();
         // TODO: change the owners nad rooms maps so it is gone
       }
     });
-    
+
     client.on('create room', roomName => {
       if (state.rooms[roomName]) {
         client.emit('room conflict', `The room "${roomName} is unavailable".`);
@@ -45,7 +45,7 @@ export default server => {
         log('STATEEEEEEEE', state);
       }
     });
-    
+
     client.on('join room', roomName => {
       const roomToJoin = state.rooms[roomName];
       if (roomToJoin) {
@@ -61,18 +61,17 @@ export default server => {
       }
     });
 
-    client.on('send message', message => {
+    client.on('send poll', question => {
       const ownedRoom = state.owners[client.id];
       if (ownedRoom) {
-        state.rooms[ownedRoom].sendPoll(message); 
+        state.rooms[ownedRoom].sendPoll(question);
       }
     });
 
     client.on('poll response', data => {
-      console.log('data', data);
-      console.log(state.rooms);
-      
-      
+      log('data', data);
+      log(state.rooms);
+
       const owner = state.rooms[data.room].owner;
       owner.emit('poll result', data.responseToPoll);
     });
