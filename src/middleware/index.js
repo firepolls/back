@@ -5,6 +5,7 @@ import { Router } from 'express';
 import catchAll from './catch-all';
 import authRouter from './router-auth';
 import errorHandler from './error-handler';
+import profileRouter from './router-profile';
 import bindResponseMethods from './bind-response-methods';
 
 export default new Router()
@@ -15,6 +16,7 @@ export default new Router()
     }),
     bindResponseMethods,
     authRouter,
+    profileRouter,
     catchAll,
     errorHandler,
   ]);

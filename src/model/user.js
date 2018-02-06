@@ -26,6 +26,9 @@ const userSchema = new Schema({
     unique: true,
     default: '',
   },
+  profile: {
+    type: Schema.Types.ObjectId,
+  },
 });
 
 userSchema.methods.verifyPassword = function (password) {
