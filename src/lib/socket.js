@@ -69,17 +69,25 @@ export default server => {
       if (roomName) {
         const room = state.rooms[roomName];
         room.addPoll(poll);
-        room.sendPoll(poll.poll);
+        room.sendPoll(poll);
         log(state.rooms[roomName]);
       }
     });
 
-    client.on('poll response', data => {
-      log('data', data);
-      log(state.rooms);
-
-      const owner = state.rooms[data.room].owner;
-      owner.emit('poll result', data.responseToPoll);
+    // Anthony - Voter responds to poll
+    client.on('poll response', poll => {
+      log('poll response', poll);
+      // Anthony - Extracting vote, id and room from poll
+      const { vote, id, room } = poll;
+      // Anthony - CurrentRoom variable gets set as the current room
+      const currentRoom = state.rooms[room];
+      // Anthony - Owner variable gets set as the owner of the current room
+      const owner = currentRoom.owner;
+      // Anthony - currentPoll variable gets set as the current poll by id
+      const currentPoll = currentRoom.polls[id];
+      // Anthony - sends the vote back to
+      currentPoll.castVote(vote);
+      owner.emit('poll result', currentPoll);
     });
   });
 };

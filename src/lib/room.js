@@ -42,7 +42,7 @@ class Room {
     };
 
     this.owner.broadcast.to(room)
-      .emit('poll inbound', pollToSend);
+      .emit('poll received', pollToSend);
   }
 
   // TODO: send poll?
