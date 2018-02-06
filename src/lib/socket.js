@@ -69,7 +69,7 @@ export default server => {
       if (roomName) {
         const room = state.rooms[roomName];
         room.addPoll(poll);
-        room.sendPoll(poll.question);
+        room.sendPoll(poll.poll);
         log(state.rooms[roomName]);
       }
     });

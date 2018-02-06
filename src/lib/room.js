@@ -32,11 +32,17 @@ class Room {
     this.polls[poll.id] = new Poll(poll);
   }
 
-  sendPoll(question) {
-    this.owner.broadcast.to(this.roomName).emit('poll inbound', {
+  sendPoll(poll) {
+    const room = this.roomName;
+    const { question, id } = poll;
+    const pollToSend = {
       question,
-      room: this.roomName,
-    });
+      id,
+      room,
+    };
+
+    this.owner.broadcast.to(room)
+      .emit('poll inbound', pollToSend);
   }
 
   // TODO: send poll?
