@@ -35,8 +35,11 @@ export default server => {
 
     client.on('create room', roomName => {
       if (state.roomMap[roomName]) {
-        client.emit('room conflict', `The room "${roomName} is unavailable".`);
+        log('Type: Create', 'Room name: ', roomName, 'Status: Conflict');
+        // Rob - Note that "Create" must be capital
+        client.emit('room status', { type: 'create', roomName });
       } else {
+        client.emit('room status', 200);
         client.emit('room created', roomName);
         // TODO: on client side this must dispatch set state for room
         // TODO: add check to make sure you don't already own a room
@@ -44,7 +47,7 @@ export default server => {
         state.roomMap[roomName] = new Room(client, roomName);
         state.ownerMap[client.id] = roomName;
         client.join(roomName);
-        log('socket.io ROOOOOOMS', io.sockets.adapter.roomMap);
+        log('socket.io ROOOOOOMS', io.sockets.adapter.rooms);
         log('STATEEEEEEEE', state);
       }
     });
