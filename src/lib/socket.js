@@ -4,7 +4,9 @@ import Room from './room';
 
 const state = {
   rooms: {},
+  // Anthony - rooms: { 'roomName': 'RoomObject'}
   owners: {},
+  // Anthony - owners: { 'ownerSocketId': 'roomName'}
 };
 
 export default server => {
@@ -61,10 +63,14 @@ export default server => {
       }
     });
 
-    client.on('send poll', question => {
-      const ownedRoom = state.owners[client.id];
-      if (ownedRoom) {
-        state.rooms[ownedRoom].sendPoll(question);
+    // Anthony - owner sends a poll.
+    client.on('create poll', poll => {
+      const roomName = state.owners[client.id];
+      if (roomName) {
+        const room = state.rooms[roomName];
+        room.addPoll(poll);
+        room.sendPoll(poll.question);
+        log(state.rooms[roomName]);
       }
     });
 
