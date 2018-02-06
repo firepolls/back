@@ -1,10 +1,11 @@
-// TODO: Consider emitting for each of these actions
+import Poll from './poll';
 
 class Room {
   constructor(socket, roomName) {
     this.owner = socket;
     this.voters = [];
     this.roomName = roomName;
+    this.polls = {};
 
     socket.join(roomName);
   }
@@ -27,11 +28,21 @@ class Room {
       .filter(currentVoter => currentVoter.id !== voter.id);
   }
 
-  sendPoll(message) {
-    this.owner.broadcast.to(this.roomName).emit('poll inbound', {
-      message,
-      room: this.roomName,
-    });
+  addPoll(poll) {
+    this.polls[poll.id] = new Poll(poll);
+  }
+
+  sendPoll(poll) {
+    const room = this.roomName;
+    const { question, id } = poll;
+    const pollToSend = {
+      question,
+      id,
+      room,
+    };
+
+    this.owner.broadcast.to(room)
+      .emit('poll received', pollToSend);
   }
 
   // TODO: send poll?

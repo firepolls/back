@@ -4,7 +4,9 @@ import Room from './room';
 
 const state = {
   rooms: {},
+  // Anthony - rooms: { 'roomName': 'RoomObject'}
   owners: {},
+  // Anthony - owners: { 'ownerSocketId': 'roomName'}
 };
 
 export default server => {
@@ -13,7 +15,7 @@ export default server => {
   };
 
   // Rob - Only allow connections from OUR front end when in production
-  const io = process.env.DEBUG === 'true' ? 
+  const io = process.env.DEBUG === 'true' ?
     socketIO(server) : socketIO(server, options);
 
   io.on('connection', client => {
@@ -25,11 +27,11 @@ export default server => {
       // Rob - if disconnecting client owns any rooms, shut down that room
       const ownedRoom = state.owners[client.id];
       if (ownedRoom) {
-        state.rooms[ownedRoom].closeRoom(); 
+        state.rooms[ownedRoom].closeRoom();
         // TODO: change the owners nad rooms maps so it is gone
       }
     });
-    
+
     client.on('create room', roomName => {
       if (state.rooms[roomName]) {
         client.emit('room conflict', `The room "${roomName} is unavailable".`);
@@ -45,7 +47,7 @@ export default server => {
         log('STATEEEEEEEE', state);
       }
     });
-    
+
     client.on('join room', roomName => {
       const roomToJoin = state.rooms[roomName];
       if (roomToJoin) {
@@ -61,20 +63,31 @@ export default server => {
       }
     });
 
-    client.on('send message', message => {
-      const ownedRoom = state.owners[client.id];
-      if (ownedRoom) {
-        state.rooms[ownedRoom].sendPoll(message); 
+    // Anthony - owner sends a poll.
+    client.on('create poll', poll => {
+      const roomName = state.owners[client.id];
+      if (roomName) {
+        const room = state.rooms[roomName];
+        room.addPoll(poll);
+        room.sendPoll(poll);
+        log(state.rooms[roomName]);
       }
     });
 
-    client.on('poll response', data => {
-      console.log('data', data);
-      console.log(state.rooms);
-      
-      
-      const owner = state.rooms[data.room].owner;
-      owner.emit('poll result', data.responseToPoll);
+    // Anthony - Voter responds to poll
+    client.on('poll response', poll => {
+      log('poll response', poll);
+      // Anthony - Extracting vote, id and room from poll
+      const { vote, id, room } = poll;
+      // Anthony - CurrentRoom variable gets set as the current room
+      const currentRoom = state.rooms[room];
+      // Anthony - Owner variable gets set as the owner of the current room
+      const owner = currentRoom.owner;
+      // Anthony - currentPoll variable gets set as the current poll by id
+      const currentPoll = currentRoom.polls[id];
+      // Anthony - sends the vote back to
+      currentPoll.castVote(vote);
+      owner.emit('poll result', currentPoll);
     });
   });
 };

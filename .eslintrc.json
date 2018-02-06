@@ -27,7 +27,8 @@
     "no-multi-assign": [0],
     "space-infix-ops": ["error", { "int32Hint": false }],
     "func-names": [0],
-    "no-param-reassign": [0]
+    "no-param-reassign": [0],
+    "no-plusplus": [0]
   },
   "globals": {
     "API_URL": false,
