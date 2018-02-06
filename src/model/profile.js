@@ -2,6 +2,7 @@
 
 import createError from 'http-errors';
 import Mongoose, { Schema } from 'mongoose';
+
 import { log } from '../lib/util';
 
 const profileSchema = new Schema({

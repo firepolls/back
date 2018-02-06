@@ -30,6 +30,3 @@ export default new Router()
       .then(response.sendStatus) 
       .catch(next);
   });
-
-
-// TODO: add PUT route
