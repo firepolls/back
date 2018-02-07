@@ -3,8 +3,6 @@
 import createError from 'http-errors';
 import Mongoose, { Schema } from 'mongoose';
 
-import { log } from '../lib/util';
-
 const profileSchema = new Schema({
   account_id: {
     type: Schema.Types.ObjectId, 
@@ -32,7 +30,7 @@ const profileSchema = new Schema({
 
 const Profile = Mongoose.model('profile', profileSchema);
 
-// profile creation
+// method to create new Profile
 Profile.create = request => {
   if (
     !request.body.firstName || 
@@ -41,6 +39,7 @@ Profile.create = request => {
   }
 
   return new Profile({
+    // using user email
     account_id: request.user._id,
     email: request.user.email,
     firstName: request.body.firstName,
@@ -48,13 +47,14 @@ Profile.create = request => {
   })
     .save()
     .then(profile => {
+      // attaching profile id to user model and saving it
       request.user.profile = profile._id;
       return request.user.save()
         .then(() => profile);
     });
 };
 
-// return profile from db
+// method to get user Profile
 Profile.fetchProfile = request => {
   return Profile.findById(request.user.profile)
     .then(profile => {
@@ -66,11 +66,13 @@ Profile.fetchProfile = request => {
     });
 };
 
+// method to delete user Profile
 Profile.delete = request => {
   return Profile.findByIdAndRemove(request.user.profile)
     .then(() => 204);
 };
 
+// method to update user profile
 Profile.update = request => {
   let options = { new: true, runValidators: true };
   return Profile.findByIdAndUpdate(

@@ -48,7 +48,9 @@
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-babel": "^4.1.2",
     "eslint-plugin-import": "^2.8.0",
+    "faker": "^4.1.0",
     "jest": "^22.1.4",
-    "nodemon": "^1.14.12"
+    "nodemon": "^1.14.12",
+    "superagent": "^3.8.2"
   }
 }

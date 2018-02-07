@@ -29,6 +29,9 @@ const userSchema = new Schema({
   profile: {
     type: Schema.Types.ObjectId,
   },
+  session: {
+    type: Schema.Types.ObjectId,
+  },
 });
 
 userSchema.methods.verifyPassword = function (password) {
