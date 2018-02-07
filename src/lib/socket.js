@@ -30,7 +30,7 @@ export default (server) => {
       if (ownedRoomName) {
         state.roomMap[ownedRoomName].closeRoom(state);
       }
-      // TODO: need to update voters array if disconnecting user is in a room
+      // TODO: Rob - if in a room, need to emit an update to all involved
     });
 
     // ------------------- OWNER ------------------- \\
@@ -68,10 +68,15 @@ export default (server) => {
     client.on('join room', roomName => {
       const roomToJoin = state.roomMap[roomName];
       if (roomToJoin) {
-        client.emit('room joined', roomName);
         client.join(roomName);
+        // Rob - Emit to everyone in the room to increment voter number
+        client.broadcast.to(roomName).emit('voter joined');
+        // Rob - Send full room object to new voter
+        client.emit('room joined', roomToJoin.getRoomForVoter(io));
+        log('__CLIENT_JOINED_ Room:', roomName);
       } else {
-        client.emit('room not found', `The room name "${roomName}" does not exist.`);
+        log('__JOIN_ERROR__', roomName, 'Not Found');
+        client.emit('room status', { type: 'join', roomName });
       }
     });
 

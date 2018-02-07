@@ -37,6 +37,11 @@ class Room {
     delete state.ownerMap[this.owner.id];
     delete state.roomMap[this.roomName];
   }
+
+  getRoomForVoter(io) {
+    const voters = io.sockets.adapter.rooms[this.roomName].length - 1;
+    return Object.assign({}, this, { owner: false, voters });
+  }
 }
 
 export default Room;
