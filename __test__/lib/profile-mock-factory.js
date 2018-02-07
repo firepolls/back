@@ -19,8 +19,7 @@ profileMockFactory.create = () => {
   )
     .then(profile => {
       mock.profile = profile;
-    })
-    .catch(console.log);
+    });
 };
 
 profileMockFactory.createWithUser = () => {
@@ -34,6 +33,5 @@ profileMockFactory.createWithUser = () => {
     .then(user => {
       mock.profile = user.profile;
       return mock;
-    })
-    .catch(console.log);
+    });
 };

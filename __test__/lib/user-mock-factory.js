@@ -13,11 +13,9 @@ userMockFactory.create = () => {
     email: faker.internet.email(),
     password: faker.internet.password(),
   };
-  console.log(mock);
 
   return User.create(mock.request)
     .then(user => {
-      console.log(user);
       mock.user = user;
       return user.createToken();
     })
@@ -27,10 +25,8 @@ userMockFactory.create = () => {
     })
     .then(user => {
       mock.user = user;
-      console.log(mock);
       return mock;
-    })
-    .catch(console.log);
+    });
 };
 
 userMockFactory.remove = () => User.remove({});
