@@ -1,31 +1,13 @@
 import Poll from './poll';
+import { log } from '../lib/util';
 
 class Room {
   constructor(socket, roomName) {
     this.owner = socket;
-    this.voters = [];
     this.roomName = roomName;
     this.polls = {};
 
     socket.join(roomName);
-  }
-
-  closeRoom() {
-    this.voters.forEach(voter => {
-      voter.emit('room closed',
-        `The room "${this.roomName}" has been closed.`
-      );
-      voter.leave(this.roomName);
-    });
-  }
-
-  addVoter(voter) {
-    this.voters.push(voter);
-  }
-
-  removeVoter(voter) {
-    this.voters = this.voters
-      .filter(currentVoter => currentVoter.id !== voter.id);
   }
 
   addPoll(poll) {
@@ -45,8 +27,16 @@ class Room {
       .emit('poll received', pollToSend);
   }
 
-  // TODO: send poll?
-  // TODO: send results?
+  closeRoom(state) {
+    this.owner.broadcast.to(this.roomName)
+      .emit('room closed', this.roomName);
+    this.owner.leave(this.roomName);
+
+    // Rob - remove owner from state.ownerMap
+    //     - remove room from state.roomMap
+    delete state.ownerMap[this.owner.id];
+    delete state.roomMap[this.roomName];
+  }
 }
 
 export default Room;
