@@ -25,13 +25,17 @@ profileMockFactory.create = () => {
 profileMockFactory.createWithUser = () => {
   let mock = {};
   return userMockFactory.create()
-    .then(userMock => {
-      mock.user = userMock.user;
-      mock.userToken = userMock.token;
-      return profileMockFactory.create();
-    })
     .then(user => {
-      mock.profile = user.profile;
+      mock.user = user;
+      const profileRequest = {
+        account_id: user._id,
+        firstName: faker.name.firstName,
+        lastName: faker.name.lastName,
+      };
+      return Profile.create(profileRequest);
+    })
+    .then(profile => {
+      mock.profile = profile;
       return mock;
     });
 };

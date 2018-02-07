@@ -29,6 +29,7 @@ describe('router-auth', () => {
             expect(response.status).toEqual(200);
           });
       });
+
       test('creating a user without a required field responds with a 400', () => {
         return superagent.post(`${process.env.API_URL}/signup`)
           .send({
@@ -41,6 +42,7 @@ describe('router-auth', () => {
             expect(response.status).toEqual(400);
           });
       });
+
       test('creating a user with an invalid input type responds with a 400', () => {
         return superagent.post(`${process.env.API_URL}/signup`)
           .send({
@@ -53,6 +55,7 @@ describe('router-auth', () => {
             expect(response.status).toEqual(400);
           });
       });
+
       test('creating a user without a password responds with a 400', () => {
         return superagent.post(`${process.env.API_URL}/signup`)
           .send({
@@ -65,6 +68,7 @@ describe('router-auth', () => {
             expect(response.status).toEqual(400);
           });
       });
+
       test('signing up with a username that is already in use will return a 409', () => {
         let user = null;
         return userMockFactory.create()
@@ -82,6 +86,7 @@ describe('router-auth', () => {
             expect(response.status).toEqual(409);
           });
       });
+      
       test('signing up to an invalid route returns a 404', () => {
         return superagent.post(`${process.env.API_URL}/signupbadroute`)
           .send({
