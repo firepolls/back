@@ -1,12 +1,20 @@
 class Poll {
-  constructor({ question, results, id }) {
+  constructor(question) {
     this.question = question;
-    this.results = results;
-    this.id = id;
+    this.results = {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+    };
   }
   // Anthony - return a new poll rather than mutate the state
   castVote(number) {
     this.results[number]++;
+  }
+
+  removeVote(number) {
+    this.results[number]--;
   }
 }
 

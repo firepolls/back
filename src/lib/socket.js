@@ -54,14 +54,12 @@ export default (server) => {
     });
 
     // Anthony - owner sends a poll.
-    client.on('create poll', poll => {
+    client.on('create poll', question => {
       const roomName = state.ownerMap[client.id];
-      if (roomName) {
-        const room = state.roomMap[roomName];
-        room.addPoll(poll);
-        room.sendPoll(poll);
-        log(state.roomMap[roomName]);
-      }
+      const room = state.roomMap[roomName];
+      room.addPoll(question);
+      room.sendNewestPoll();
+      log('__CREATE_POLL__');
     });
 
     // ------------------- VOTER ------------------- \\
@@ -82,21 +80,22 @@ export default (server) => {
 
     // Anthony - Voter responds to poll
     client.on('poll response', poll => {
-      log('poll response', poll);
+      log('__POLL_RESPONSE__', poll);
       // Anthony - Extracting vote, id and room from poll
-      const { vote, id, room } = poll;
-      // Anthony - CurrentRoom variable gets set as the current room
-      const currentRoom = state.roomMap[room];
+      const { vote, id, roomName } = poll;
+      // Anthony - room variable gets set as the current room
+      const room = state.roomMap[roomName];
       // Anthony - Owner variable gets set as the owner of the current room
-      const owner = currentRoom.owner;
-      // Anthony - currentPoll variable gets set as the current poll by id
-      const currentPoll = currentRoom.polls[id];
+      const owner = room.owner;
+
       // Anthony - sends the vote back to
-      currentPoll.castVote(vote);
-      owner.emit('poll result', currentPoll);
+      room.addVote(id, vote);
+      owner.emit('poll vote increment', { id, vote });
     });
 
     client.on('leave room', roomName => {
+      // Rob - Must send message before leaving room
+      client.broadcast.to(roomName).emit('voter left');
       client.leave(roomName);
       log('__LEAVE_ROOM__', roomName, 'Client:', client.id);
     });
