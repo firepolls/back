@@ -1,41 +1,25 @@
 'use strict';
 
 import faker from 'faker';
-
+import superagent from 'superagent';
 import Profile from '../../src/model/profile';
-import userMockFactory from './user-mock-factory';
+import * as userMockFactory from './user-mock-factory';
 
-const profileMockFactory = module.exports = {};
 
-profileMockFactory.create = () => {
-  let mock = {};
-  mock.request = {
-    firstName: faker.name.firstName(),
-    lastName: faker.name.lastName(),
-  };
-  return Profile.create(
-    mock.request.firstName,
-    mock.request.lastName,
-  )
-    .then(profile => {
-      mock.profile = profile;
-    });
-};
-
-profileMockFactory.createWithUser = () => {
-  let mock = {};
+export const createWithUser = () => {
   return userMockFactory.create()
-    .then(user => {
-      mock.user = user;
-      const profileRequest = {
-        account_id: user._id,
-        firstName: faker.name.firstName,
-        lastName: faker.name.lastName,
-      };
-      return Profile.create(profileRequest);
-    })
-    .then(profile => {
-      mock.profile = profile;
-      return mock;
+    .then(mock => {
+      return superagent.post(`${process.env.API_URL}/profile`)
+        .set('Authorization', `Bearer ${mock.token}`)
+        .send({
+          firstName: faker.name.firstName(),
+          lastName: faker.name.lastName(),
+        })
+        .then(() => {
+          console.log('mock mock mock', mock);
+          return mock;
+        });
     });
 };
+
+export const remove = () => Profile.remove({});

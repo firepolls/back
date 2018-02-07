@@ -5,11 +5,11 @@ require('./lib/setup');
 import faker from 'faker';
 import superagent from 'superagent';
 
-import * as server from '../src/lib/server';
 import User from '../src/model/user';
 
-import userMockFactory from './lib/user-mock-factory';
-import profileMockFactory from './lib/profile-mock-factory';
+import * as server from '../src/lib/server';
+import * as userMockFactory from './lib/user-mock-factory';
+import * as profileMockFactory from './lib/profile-mock-factory';
 
 
 describe('router-auth', () => {
@@ -86,7 +86,7 @@ describe('router-auth', () => {
             expect(response.status).toEqual(409);
           });
       });
-      
+
       test('signing up to an invalid route returns a 404', () => {
         return superagent.post(`${process.env.API_URL}/signupbadroute`)
           .send({

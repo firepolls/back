@@ -4,9 +4,7 @@ import faker from 'faker';
 
 import User from '../../src/model/user';
 
-const userMockFactory = module.exports = {};
-
-userMockFactory.create = () => {
+export const create = () => {
   let mock = {};
   mock.request = {
     username: faker.internet.userName(),
@@ -29,4 +27,4 @@ userMockFactory.create = () => {
     });
 };
 
-userMockFactory.remove = () => User.remove({});
+export const remove = () => User.remove({});
