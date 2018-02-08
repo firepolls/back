@@ -1,0 +1,14 @@
+config:
+  target: "http://localhost:3000"
+  phases:
+    - duration: 30
+      arrivalRate: 10
+scenarios:
+  - name: "Connect and send a bunch of Votes"
+    flow:
+      - loop:
+          - emit:
+              channel: ""
+              data: "hello world!"
+          - think: 1
+        count: 50
