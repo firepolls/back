@@ -4,10 +4,6 @@ require('./lib/setup');
 
 import faker from 'faker';
 import superagent from 'superagent';
-
-import User from '../src/model/user';
-import Profile from '../src/model/profile';
-
 import * as server from '../src/lib/server';
 import * as userMockFactory from './lib/user-mock-factory';
 import * as profileMockFactory from './lib/profile-mock-factory';

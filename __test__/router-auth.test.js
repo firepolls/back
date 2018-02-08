@@ -4,13 +4,9 @@ require('./lib/setup');
 
 import faker from 'faker';
 import superagent from 'superagent';
-
 import User from '../src/model/user';
-
 import * as server from '../src/lib/server';
 import * as userMockFactory from './lib/user-mock-factory';
-import * as profileMockFactory from './lib/profile-mock-factory';
-
 
 describe('router-auth', () => {
   beforeAll(server.start);
@@ -129,7 +125,6 @@ describe('router-auth', () => {
       test('logging in with a bad password should return a 401', () => {
         return userMockFactory.create()
           .then(mock => {
-            console.log(mock);
             return superagent.get(`${process.env.API_URL}/login`)
               .auth(mock.request.username, 'x25jDvlQfo8KDCc');
           })
