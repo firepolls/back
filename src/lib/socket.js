@@ -30,7 +30,7 @@ export default (server) => {
       if (ownedRoomName) {
         state.roomMap[ownedRoomName].closeRoom(state);
       }
-      // TODO: Rob - if in a room, need to emit an update to all involved
+      // TODO: Rob - if in a room, need to emit an update to all involved to remove the count
     });
 
     // ------------------- OWNER ------------------- \\
@@ -86,12 +86,15 @@ export default (server) => {
       const room = state.roomMap[roomName];
       const { voteMap } = room.polls[pollId];
       const lastVote = voteMap[client.id];
+      log('LAST_VOTE:', lastVote);
       if (lastVote) {
         room.removeVote(pollId, lastVote);
         io.in(roomName).emit('vote decrement', { pollId, lastVote });
       }
+      // Rob - update the vote count and tell others to update
       room.addVote(pollId, vote);
       io.in(roomName).emit('vote increment', { pollId, vote });
+      voteMap[client.id] = vote;
     });
 
     client.on('leave room', roomName => {
