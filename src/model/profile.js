@@ -7,8 +7,8 @@ import { log } from '../lib/util';
 
 const profileSchema = new Schema({
   account_id: {
-    type: Schema.Types.ObjectId, 
-    required: true, 
+    type: Schema.Types.ObjectId,
+    required: true,
     unique: true,
   },
   email: {
@@ -23,7 +23,7 @@ const profileSchema = new Schema({
   lastName: {
     type: String,
     required: true,
-  },  
+  },
   timestamp: {
     type: Date,
     default: () => new Date(),
@@ -35,7 +35,7 @@ const Profile = Mongoose.model('profile', profileSchema);
 // profile creation
 Profile.create = request => {
   if (
-    !request.body.firstName || 
+    !request.body.firstName ||
     !request.body.lastName) {
     return Promise.reject(createError(400, '__VALIDATION__ missing firstName or lastName'));
   }
@@ -61,7 +61,6 @@ Profile.fetchProfile = request => {
       if (!profile) {
         return Promise.reject(createError(404, '__ERROR__ profile not found'));
       }
-
       return profile;
     });
 };

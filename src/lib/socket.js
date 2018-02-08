@@ -30,13 +30,13 @@ export default (server) => {
       if (ownedRoomName) {
         state.roomMap[ownedRoomName].closeRoom(state);
       }
-      // TODO: need to update voters array if disconnecting user is in a room
+      // TODO: Rob - if in a room, need to emit an update to all involved to remove the count
     });
 
     // ------------------- OWNER ------------------- \\
     client.on('create room', roomName => {
       if (state.roomMap[roomName]) {
-        log('__ERROR__ Type: Create', 'Room name: ', roomName, 'Status: Conflict');
+        log('__CREATE_ROOM_ERROR__', roomName);
         // Rob - Send error status back to client
         client.emit('room status', { type: 'create', roomName });
       } else {
@@ -51,49 +51,57 @@ export default (server) => {
     client.on('close room', () => {
       const ownedRoomName = state.ownerMap[client.id];
       state.roomMap[ownedRoomName].closeRoom(state);
+      log('__CLOSE_ROOM__', ownedRoomName);
     });
 
     // Anthony - owner sends a poll.
-    client.on('create poll', poll => {
+    client.on('create poll', question => {
       const roomName = state.ownerMap[client.id];
-      if (roomName) {
-        const room = state.roomMap[roomName];
-        room.addPoll(poll);
-        room.sendPoll(poll);
-        log(state.roomMap[roomName]);
-      }
+      const room = state.roomMap[roomName];
+      room.addPoll(question);
+      room.sendNewestPoll();
+      log('__CREATE_POLL__', question);
     });
 
     // ------------------- VOTER ------------------- \\
     client.on('join room', roomName => {
       const roomToJoin = state.roomMap[roomName];
       if (roomToJoin) {
-        client.emit('room joined', roomName);
         client.join(roomName);
+        // Rob - Emit to everyone in the room to increment voter number
+        client.broadcast.to(roomName).emit('voter joined');
+        // Rob - Send full room object to new voter
+        client.emit('room joined', roomToJoin.getRoomForVoter(io));
+        log('__JOIN_ROOM__', roomName);
       } else {
-        client.emit('room not found', `The room name "${roomName}" does not exist.`);
+        log('__JOIN_ROOM_ERROR__', roomName);
+        client.emit('room status', { type: 'join', roomName });
       }
     });
 
     // Anthony - Voter responds to poll
-    client.on('poll response', poll => {
-      log('poll response', poll);
-      // Anthony - Extracting vote, id and room from poll
-      const { vote, id, room } = poll;
-      // Anthony - CurrentRoom variable gets set as the current room
-      const currentRoom = state.roomMap[room];
-      // Anthony - Owner variable gets set as the owner of the current room
-      const owner = currentRoom.owner;
-      // Anthony - currentPoll variable gets set as the current poll by id
-      const currentPoll = currentRoom.polls[id];
-      // Anthony - sends the vote back to
-      currentPoll.castVote(vote);
-      owner.emit('poll result', currentPoll);
+    client.on('vote cast', ({ vote, pollId, roomName }) => {
+      log('__VOTE_CAST__', '__ROOM__', roomName, '__POLL__', pollId, '__VOTE__', vote);
+
+      const room = state.roomMap[roomName];
+      const { voteMap } = room.polls[pollId];
+      const lastVote = voteMap[client.id];
+      log('LAST_VOTE:', lastVote);
+      if (lastVote) {
+        room.removeVote(pollId, lastVote);
+        io.in(roomName).emit('vote decrement', { pollId, lastVote });
+      }
+      // Rob - update the vote count and tell others to update
+      room.addVote(pollId, vote);
+      io.in(roomName).emit('vote increment', { pollId, vote });
+      voteMap[client.id] = vote;
     });
 
     client.on('leave room', roomName => {
+      // Rob - Must send message before leaving room
+      client.broadcast.to(roomName).emit('voter left');
       client.leave(roomName);
-      log('__LEAVE_ROOM__', roomName, 'Client:', client.id);
+      log('__LEAVE_ROOM__', roomName, '__CLIENT__', client.id);
     });
   });
 };
