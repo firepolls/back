@@ -58,11 +58,9 @@ Profile.create = request => {
 Profile.fetchProfile = request => {
   return Profile.findById(request.user.profile)
     .then(profile => {
-      console.log('route:', profile);
       if (!profile) {
         return Promise.reject(createError(404, '__ERROR__ profile not found'));
       }
-
       return profile;
     });
 };

@@ -126,23 +126,12 @@ describe('router-auth', () => {
           });
       });
 
-      test('logging in with without basic should will return a 400', () => {
+      test('logging in with a bad password should return a 401', () => {
         return userMockFactory.create()
           .then(mock => {
+            console.log(mock);
             return superagent.get(`${process.env.API_URL}/login`)
-              .set('Authorization', 'invalid');
-          })
-          .then(Promise.reject)
-          .catch(response => {
-            expect(response.status).toEqual(400);
-          });
-      });
-
-      test('logging in with a bad username or password should return a 401', () => {
-        return userMockFactory.create()
-          .then(() => {
-            return superagent.get(`${process.env.API_URL}/login`)
-              .auth('invalid', 'invalid');
+              .auth(mock.request.username, 'x25jDvlQfo8KDCc');
           })
           .then(Promise.reject)
           .catch(response => {
