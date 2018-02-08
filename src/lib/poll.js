@@ -1,12 +1,26 @@
 class Poll {
-  constructor({ question, results, id }) {
+  constructor(question) {
     this.question = question;
-    this.results = results;
-    this.id = id;
+    this.results = {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+    };
+    this.voteMap = {};
   }
-  // Anthony - return a new poll rather than mutate the state
+
+  packagePollForVoter(pollId) {
+    const { question, results } = this;
+    return { question, results, pollId };
+  }
+
   castVote(number) {
     this.results[number]++;
+  }
+
+  removeVote(number) {
+    this.results[number]--;
   }
 }
 
