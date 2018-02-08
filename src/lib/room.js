@@ -37,7 +37,9 @@ class Room {
 
   getRoomForVoter(io) {
     const voters = io.sockets.adapter.rooms[this.roomName].length - 1;
-    return Object.assign({}, this, { owner: false, voters });
+    const room = Object.assign({}, this, { owner: false, voters });
+    delete room.voteMap;
+    return room;
   }
 
   addVote(pollId, vote) {
