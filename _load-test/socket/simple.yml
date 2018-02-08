@@ -8,7 +8,7 @@ scenarios:
     flow:
       - loop:
           - emit:
-              channel: ""
-              data: "hello world!"
+              channel: "vote cast"
+              data: { vote: 1, pollId: 0, roomName: "socket test room" }
           - think: 1
         count: 50
