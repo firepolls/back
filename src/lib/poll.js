@@ -1,5 +1,5 @@
 class Poll {
-  constructor(question) {
+  constructor(question, pollId) {
     this.question = question;
     this.results = {
       1: 0,
@@ -8,10 +8,11 @@ class Poll {
       4: 0,
     };
     this.voteMap = {};
+    this.pollId = pollId;
   }
 
-  packagePollForVoter(pollId) {
-    const { question, results } = this;
+  packagePollForVoter() {
+    const { question, results, pollId } = this;
     return { question, results, pollId };
   }
 
