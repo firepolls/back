@@ -11,7 +11,6 @@ describe('poll testing', () => {
 
   test('packagePollForVoter should return an object with information', () => {
     let packagedPoll = poll.packagePollForVoter();
-    console.log(packagedPoll);
     expect(packagedPoll.pollId).toEqual(123);
     expect(packagedPoll.results).toEqual({
       1: 0,
