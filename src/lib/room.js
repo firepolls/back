@@ -14,10 +14,11 @@ class Room {
     this.polls.push(new Poll(question));
   }
 
+  // Rob - In order for this to work properly, this must be called AFTER Room.addPoll()
   sendNewestPoll() {
-    const pollIndex = this.polls.length - 1;
-    // Rob - In order for this to work properly, this must be called AFTER Room.addPoll()
-    const pollToSend = Object.assign({}, this.polls[pollIndex], { id: pollIndex });
+    const pollId = this.polls.length - 1;
+    const poll = this.polls[pollId];
+    const pollToSend = poll.packagePollForVoter(pollId);
     this.owner.broadcast.to(this.roomName)
       .emit('poll received', pollToSend);
   }

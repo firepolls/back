@@ -7,8 +7,14 @@ class Poll {
       3: 0,
       4: 0,
     };
+    this.voteMap = {};
   }
-  // Anthony - return a new poll rather than mutate the state
+
+  packagePollForVoter(pollId) {
+    const { question, results } = this;
+    return { question, results, pollId };
+  }
+
   castVote(number) {
     this.results[number]++;
   }
