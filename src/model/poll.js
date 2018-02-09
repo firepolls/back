@@ -28,7 +28,6 @@ const pollSchema = new Schema({
 const Poll = Mongoose.model('poll', pollSchema);
 
 Poll.create = poll => {
-  console.log(poll);
   return new Poll(poll)
     .save();
 };
