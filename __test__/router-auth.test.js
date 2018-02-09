@@ -111,6 +111,18 @@ describe('router-auth', () => {
           });
       });
 
+      test('logging in with a bad password should return a 401', () => {
+        return userMockFactory.create()
+          .then(mock => {
+            return superagent.get(`${process.env.API_URL}/login`)
+              .auth(mock.request.username, 'bad password');
+          })
+          .then(Promise.reject)
+          .catch(response => {
+            expect(response.status).toEqual(401);
+          });
+      });
+
       test('logging in without authorization header should return a 400', () => {
         return userMockFactory.create()
           .then(() => {
@@ -122,11 +134,23 @@ describe('router-auth', () => {
           });
       });
 
+      test('logging in without authorization header should return a 400', () => {
+        return userMockFactory.create()
+          .then(() => {
+            return superagent.get(`${process.env.API_URL}/login`)
+              .set('Authorization', null);
+          })
+          .then(Promise.reject)
+          .catch(response => {
+            expect(response.status).toEqual(400);
+          });
+      });
+
       test('logging in with a bad password should return a 401', () => {
         return userMockFactory.create()
           .then(mock => {
             return superagent.get(`${process.env.API_URL}/login`)
-              .auth(mock.request.username, 'x25jDvlQfo8KDCc');
+              .auth(mock.request.username);
           })
           .then(Promise.reject)
           .catch(response => {

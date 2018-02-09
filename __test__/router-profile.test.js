@@ -44,6 +44,21 @@ describe('router-profile.js', () => {
             expect(response.status).toEqual(400);
           });
       });
+
+      test('creating a profile without authentication header should return a 400', () => {
+        return userMockFactory.create()
+          .then(mock => {
+            return superagent.post(`${process.env.API_URL}/profile`)
+              .send({
+                firstName: faker.name.firstName(),
+                lastName: faker.name.lastName(),
+              });
+          })
+          .then(Promise.reject)
+          .catch(response => {
+            expect(response.status).toEqual(400);
+          });
+      });
     });
   });
 
