@@ -8,15 +8,22 @@ import { json as bodyParser } from 'express';
 export default new Router()
   .post('/session', bearerAuth, bodyParser(), (request, response, next) => {
     log('__ROUTE__ POST/session');
-    
+    let sessionObject = null;
+
     Session.create(request)
-      // .then(session => {
-      //   console.log('from route: ', session);
-        
-      //   return Promise.all(request.polls
-      //     .map(poll => session.addPoll(poll)));
-      // })
-      .then(response.json)
+      .then(session => {
+        sessionObject = session;
+        return Promise.all(request.body.polls
+          .map(poll => session.addPoll(poll)));
+      })
+      .then(polls => {
+        const { roomName } = sessionObject;
+        const savedRoom = {
+          polls,
+          roomName,
+        };
+        return response.json(savedRoom);
+      })
       .catch(next);
   })
   .get('/session', bearerAuth, (request, response, next) => {

@@ -19,24 +19,18 @@ const pollSchema = new Schema({
   results: {
     type: Schema.Types.Mixed, 
   },
+  pollId: {
+    type: Number,
+    required: true,
+  },
 });
 
 const Poll = Mongoose.model('poll', pollSchema);
 
 Poll.create = poll => {
-  if (!poll) {
-    Promise.reject(createError(400, '__ERROR_VALIDATION__ poll is missing question'));
-  }
-
-  return new Poll({
-    question: poll.question,
-    results: poll.results,  
-  })
-    .markModified('results')
+  console.log(poll);
+  return new Poll(poll)
     .save();
 };
-
-// TODO: delete poll method
-
 
 export default Poll;

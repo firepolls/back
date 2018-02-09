@@ -9,7 +9,6 @@ const sessionSchema = new Schema({
   account_id: {
     type: Schema.Types.ObjectId,
     required: true,
-    unique: true,
   },
   roomName: {
     type: String,
@@ -28,18 +27,18 @@ const sessionSchema = new Schema({
   usePushEach: true,
 });
 
-const Session = Mongoose.model('session', sessionSchema);
-
 // add poll helper function
-sessionSchema.methods.addPoll = function (data) {
-  let pollData = Object.assign({}, data, { session_id: this._id });
-  return Poll.create(pollData)
-    .then(poll => {
-      this.polls.push(poll._id);
-    
-      this.save();
+sessionSchema.methods.addPoll = function (poll) {
+  poll.session_id = this._id;
+  return Poll.create(poll)
+    .then(pollDocument => {
+      this.polls.push(pollDocument._id);
+      return this.save()
+        .then(() => pollDocument);
     });
 };
+
+const Session = Mongoose.model('session', sessionSchema);
 
 // method to create new session
 Session.create = request => {
