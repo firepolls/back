@@ -1,12 +1,9 @@
 config:
-  target: 'http://localhost:3000'
+  target: 'https://firepolls-back-production.herokuapp.com'
   phases:
-    - duration: 5 # five seconds
-      arrivalRate: 100 # 20 fake users per second
-    - duration: 5 # five seconds
-      arrivalRate: 200 # 20 fake users per second
-    - duration: 5 # five seconds
-      arrivalRate: 400 # 20 fake users per second
+    - duration: 40
+      arrivalRate: 1
+      rampTo: 50
   processor: './load-test-create-user.js'
 scenarios:
   - name: "Create Users"
