@@ -1,97 +1,163 @@
-POLL VAULT
+<h1 align="center">
+  Firepolls
+  <br>
+</h1>
 
-## Configuration
-Create a `.env` file and configure it with the following environment variables 
-``` bash
-PORT=3000 
-DEBUG=true
-CORS_ORIGINS=<url of front end)> 
-MONGO_URI=<mongo uri>
-SECRET=<random string>
-```
+Firepolls is a polling application that provides fast formative actionable data to users in real time.
 
-```
-PORT=3000 
-DEBUG=true
-CORS_ORIGIN=http://localhost:8080
-MONGO_URI=mongodb://localhost/firepolls-test
-SECRET=superSecret
-```
+Users can create, join rooms and create polls anonymously. When a user creates a room they can invite other users to join with the room name. Once a room is created the owner can then create polls which are available to other users within the room. If users choose to sign up, they will have access to saved rooms which contain poll results.
 
-## Running SOCKET PARTY 
-* Start a mongodb `npm run db-on`
-* Start the server `npm run start` or `npm run watch`
+Firepolls is a fullstack javascript application.
 
-## API Resources
-#### User Model
-The user model is used in the backend strictly for authentication and authorization. The user model will never be returned from the API, however userID's are stored on profiles for authorization validation.
+## Build Status
 
-* `_id` - a unique database generated string which uniquely identifies a user
-* `email` - a unique string which stores the users email
-* `username` - a unique string that stores the users username
-* `passwordHash` - a string that holds a users hashed password
-* `tokenSeed` - a unique and random string used to generate authorization tokens 
+[![Build Status](https://travis-ci.org/firepolls/back.svg?branch=master)](https://travis-ci.org/firepolls/back/)
+[![npm](https://img.shields.io/npm/l/express.svg)](https://github.com/firepolls/back/blob/master/LICENSE)
+![Contributions welcome](https://img.shields.io/badge/contributions-welcome-green.svg)
 
-## Auth 
-SOCKET uses Basic authentication and Bearer authorization to enforce access controls. Basic and Bearer auth both use the HTTP `Authorization` header to pass credentials on a request.
+## Tech / Frameworks
 
-#### Basic Authentication
-Once a user account has been created Basic Authentication can be used to make a request on behalf of the account. To create a Basic Authorization Header the client must base64 encode a string with the username and password separated by a colon. Then the encoded string can be appended to the string `'Basic '` and set to an `Authorization` header on an HTTP Request.    
+### Back-end:
+- node.js
+    - babel-core
+    - babel-preset-env
+    - babel-register
+    - bcrypt
+    - cors
+    - dotenv
+    - express
+    - http-errors
+    - jsonwebtoken
+    - mongoose
+    - socket.io
+    - babel-eslint
+    - eslint
+    - eslint-config-airbnb-base
+    - eslint-plugin-babel
+    - eslint-plugin-import
+    - faker
+    - jest
+    - nodemon
+    - superagent
 
-``` javascript
-// Example of formating a Basic Authentication header in Javascript 
-let username = 'coolDude'
-let password = 'abcd1234'
+### Front-end:
+- node.js
+    - babel-core
+    - babel-loader
+    - babel-preset-env
+    - babel-preset-react
+    - babel-preset-stage-2
+    - clean-webpack-plugin
+    - css-loader
+    - dotenv
+    - express
+    - extract-text-webpack-plugin
+    - file-loader
+    - html-webpack-plugin
+    - material-ui
+    - node-sass
+    - react
+    - react-dom
+    - react-redux
+    - react-router-dom
+    - react-stars
+    - redux
+    - redux-devtools-extension
+    - resolve-url-loader
+    - sass-loader
+    - serve-favicon
+    - socket.io
+    - socket.io-client
+    - style-loader
+    - superagent
+    - uglifyjs-webpack-plugin
+    - url-loader
+    - uuid
+    - validator
+    - webpack
+    - webpack-dev-server
+    - babel-eslint
+    - enzyme
+    - enzyme-adapter-react-16
+    - eslint
+    - eslint-config-airbnb
+    - eslint-plugin-babel
+    - eslint-plugin-import
+    - eslint-plugin-jsx-a11y
+    - eslint-plugin-react
+    - jest
 
-let encoded = window.btoa(`${username}:${password}`)
-let headers = {
-  Authorization: `Basic ${encoded}`
-}
-```
 
-#### Bearer Authorization
-After a successful signup or login request the client will receive a token. Bearer Authorization uses that token to make a request on behalf of that user account. The token should be appended to the string `'Bearer '` and set to an Authorization header on an HTTP Request.
+### Hosting
+  - Heroku
 
-``` javascript
-// Example of formating a Bearer Authorization header in Javascript
-let token = '11983261983261982643918649814613298619823698243'
+### Database
+  - MongoDB
 
-let headers = {
-  Authorization: `Beaer ${token}`
-}
-```
+### Continuous Integration
+  - TravisCI
 
----
+## Features
+
+### User
+
+  - signup
+  - login
+  - create a room
+  - join a room
+  - leave a room
+  - vote on polls
+
+### User(as a room creator)
+  - create polls
+  - close room
+  - save a room's poll results (if user has an account)
+
+## Entity Relationship Model
+
+<h1 align="center">
+  <img src="https://i.imgur.com/RMpKJy2.png" alt="Volly" width="960"></a>
+</h1>
 
 
-#### POST `/signup`
-a HTTP POST request to /signup will create a new user account.
+## Tests
 
-###### request 
-* Expected Headers
-  * Content-Type: application/json
-* Request Body
-  * JSON containing a username, email and password
+All tests run through the Jest testing suite on the front and back end.
+To run our code you must clone both front and back repos:
 
-``` json 
-{
-  "username": "coolDude",
-  "email": "coolDude@coolGuy.com",
-  "password": "abcd1234"
-}
-```
+Front:
+https://github.com/firepolls/front
 
-###### response
-The response body will be a **bearer token**.
+Back:
+https://github.com/firepolls/back
 
---- 
+Install all required dependencies by running npm i. Before running tests you must install [MongoDB](https://www.mongodb.com/download-center?jmp=nav#community). Once MongoDB is installed you can start your database with npm run dbon in your terminal.
 
-#### GET `/login`
-A HTTP GET request to /login will login (fetch a token) to an existing user account.
+How to use?
 
-###### request
-* Expected Headers 
-  * Basic Authorization for the user account
+Visit our site at www.firepolls.com. You can get to creating a room and polls right away. Invite users to your room by providing them with your room name which they can input into the join form. If you choose to create an account by selecting sign up you can save rooms which contain your poll results.
 
-###### response 
-The response body will be a **bearer token**.
+
+## Contribute
+
+Want to help? Contribute to our project! Fork our [repo](https://github.com/firepolls) and make a PR. Please feel free to contact us prior to beginning any work to discuss your ideas.
+
+## Credits
+
+[Robert Reed](https://github.com/RobertMcReed)
+
+[Pedja Josifovic](https://github.com/pjosifovic)
+
+[Kerry Nordstrom](https://github.com/kerrynordstrom)
+
+[Seth Donohue](https://github.com/SethDonohue)
+
+[Anthony Robinson](https://github.com/AMKRobinson)
+
+
+
+
+
+## License
+
+MIT ©  [Robert Reed](https://github.com/RobertMcReed),  [Pedja Josifovic](https://github.com/pjosifovic),  [Kerry Nordstrom](https://github.com/kerrynordstrom),  [Seth Donohue](https://github.com/SethDonohue),  & [Anthony Robinson](https://github.com/AMKRobinson)
