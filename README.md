@@ -116,7 +116,7 @@ Firepolls is a fullstack javascript application.
 ## Entity Relationship Model
 
 <h1 align="center">
-  <img src="https://i.imgur.com/RMpKJy2.png" alt="Volly" width="640"></a>
+  <img src="https://i.imgur.com/RMpKJy2.png" alt="Volly" width="960"></a>
 </h1>
 
 
