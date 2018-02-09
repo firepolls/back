@@ -29,7 +29,11 @@ const userSchema = new Schema({
   profile: {
     type: Schema.Types.ObjectId,
   },
-});
+  sessions: [{
+    type: Schema.Types.ObjectId,
+    ref: 'session',
+  }],
+}, { usePushEach: true });
 
 userSchema.methods.verifyPassword = function (password) {
   return bcrypt.compare(password, this.passwordHash)
