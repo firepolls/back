@@ -6,9 +6,8 @@ import superagent from 'superagent';
 import User from '../src/model/user';
 import Session from '../src/model/session';
 import * as server from '../src/lib/server';
-import * as sessionMockFactory from './lib/session-mock-factory';
 import * as userMockFactory from './lib/user-mock-factory';
-
+import * as sessionMockFactory from './lib/session-mock-factory';
 
 describe('router-session.js', () => {
   beforeAll(server.start);
@@ -22,8 +21,7 @@ describe('router-session.js', () => {
             return superagent.post(`${process.env.API_URL}/session`)
               .set('Authorization', `Bearer ${mock.token}`)
               .send({
-                name: faker.random.word(),
-                description: faker.random.words(10),
+                roomName: faker.random.word(),
               });
           })
           .then(response => {
