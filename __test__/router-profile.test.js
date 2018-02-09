@@ -17,7 +17,6 @@ describe('router-profile.js', () => {
       test('creating a profile should return a 200 status', () => {
         return userMockFactory.create()
           .then(mock => {
-            console.log(mock.token);
             return superagent.post(`${process.env.API_URL}/profile`)
               .set('Authorization', `Bearer ${mock.token}`)
               .send({
