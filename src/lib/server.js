@@ -9,6 +9,7 @@ import socket from './socket';
 import middleware from '../middleware';
 
 const app = express().use(middleware);
+
 const state = {
   isOn: false,
   http: null,
