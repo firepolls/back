@@ -17,6 +17,7 @@ describe('router-profile.js', () => {
       test('creating a profile should return a 200 status', () => {
         return userMockFactory.create()
           .then(mock => {
+            console.log(mock.token);
             return superagent.post(`${process.env.API_URL}/profile`)
               .set('Authorization', `Bearer ${mock.token}`)
               .send({
@@ -37,6 +38,21 @@ describe('router-profile.js', () => {
               .send({
                 firstName: faker.name.firstName(),
                 lastName: null,
+              });
+          })
+          .then(Promise.reject)
+          .catch(response => {
+            expect(response.status).toEqual(400);
+          });
+      });
+
+      test('creating a profile without authentication header should return a 400', () => {
+        return userMockFactory.create()
+          .then(mock => {
+            return superagent.post(`${process.env.API_URL}/profile`)
+              .send({
+                firstName: faker.name.firstName(),
+                lastName: faker.name.lastName(),
               });
           })
           .then(Promise.reject)

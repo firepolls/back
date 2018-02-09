@@ -2,7 +2,6 @@ import Room from '../src/lib/room';
 
 describe('Room testing', () => {
   let room = new Room(null, 'room');
-  console.log(room);
 
   test('Room creation should return a new room object', () => {
     expect(room.polls).toEqual([]);
