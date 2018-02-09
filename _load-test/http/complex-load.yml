@@ -1,8 +1,6 @@
 config:
   target: 'http://localhost:3000'
-  phases:
-    - duration: 5 
-      arrivalRate: 1 
+  phases: 
     - duration: 10
       arrivalRate: 20
     - duration: 10
@@ -37,13 +35,3 @@ scenarios:
           json: "$.token"
           as: "token"
     - log: "Sent a request to login/"
-    # - post:
-    #     url: "/profile"
-    #     headers:
-    #       Authorization: "Bearer {{ token }}"
-    #     json:
-    #       bio: "{{ bio }}"
-    #       avatar: "{{ avatar }}"
-    #       firstName: "{{ firstName }}"
-    #       lastName: "{{ lastName }}"
-    # - log : "Sent a request to profiles/"

@@ -1,0 +1,195 @@
+{
+  "aggregate": {
+    "timestamp": "2018-02-09T02:11:14.270Z",
+    "scenariosCreated": 1700,
+    "scenariosCompleted": 0,
+    "requestsCompleted": 0,
+    "latency": {
+      "min": null,
+      "max": null,
+      "median": null,
+      "p95": null,
+      "p99": null
+    },
+    "rps": {
+      "count": 1700,
+      "mean": 55.83
+    },
+    "scenarioDuration": {
+      "min": null,
+      "max": null,
+      "median": null,
+      "p95": null,
+      "p99": null
+    },
+    "scenarioCounts": {
+      "Login Users": 1700
+    },
+    "errors": {
+      "ECONNREFUSED": 1700
+    },
+    "codes": {},
+    "matches": 0,
+    "customStats": {},
+    "phases": [
+      {
+        "duration": 10,
+        "arrivalRate": 20
+      },
+      {
+        "duration": 10,
+        "arrivalRate": 50
+      },
+      {
+        "duration": 10,
+        "arrivalRate": 100
+      }
+    ]
+  },
+  "intermediate": [
+    {
+      "timestamp": "2018-02-09T02:10:53.042Z",
+      "scenariosCreated": 179,
+      "scenariosCompleted": 0,
+      "requestsCompleted": 0,
+      "latency": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "rps": {
+        "count": 179,
+        "mean": 19.39
+      },
+      "scenarioDuration": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "scenarioCounts": {
+        "Login Users": 179
+      },
+      "errors": {
+        "ECONNREFUSED": 179
+      },
+      "codes": {},
+      "matches": 0,
+      "latencies": [],
+      "customStats": {},
+      "concurrency": 0,
+      "pendingRequests": 891
+    },
+    {
+      "timestamp": "2018-02-09T02:11:03.044Z",
+      "scenariosCreated": 470,
+      "scenariosCompleted": 0,
+      "requestsCompleted": 0,
+      "latency": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "rps": {
+        "count": 470,
+        "mean": 45.68
+      },
+      "scenarioDuration": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "scenarioCounts": {
+        "Login Users": 470
+      },
+      "errors": {
+        "ECONNREFUSED": 470
+      },
+      "codes": {},
+      "matches": 0,
+      "latencies": [],
+      "customStats": {},
+      "concurrency": 0,
+      "pendingRequests": 4240
+    },
+    {
+      "timestamp": "2018-02-09T02:11:13.045Z",
+      "scenariosCreated": 950,
+      "scenariosCompleted": 0,
+      "requestsCompleted": 0,
+      "latency": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "rps": {
+        "count": 950,
+        "mean": 92.32
+      },
+      "scenarioDuration": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "scenarioCounts": {
+        "Login Users": 950
+      },
+      "errors": {
+        "ECONNREFUSED": 950
+      },
+      "codes": {},
+      "matches": 0,
+      "latencies": [],
+      "customStats": {},
+      "concurrency": 0,
+      "pendingRequests": 11490
+    },
+    {
+      "timestamp": "2018-02-09T02:11:14.266Z",
+      "scenariosCreated": 101,
+      "scenariosCompleted": 0,
+      "requestsCompleted": 0,
+      "latency": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "rps": {
+        "count": 101,
+        "mean": 66.89
+      },
+      "scenarioDuration": {
+        "min": null,
+        "max": null,
+        "median": null,
+        "p95": null,
+        "p99": null
+      },
+      "scenarioCounts": {
+        "Login Users": 101
+      },
+      "errors": {
+        "ECONNREFUSED": 101
+      },
+      "codes": {},
+      "matches": 0,
+      "latencies": [],
+      "customStats": {},
+      "concurrency": 0,
+      "pendingRequests": 3399
+    }
+  ]
+}

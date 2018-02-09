@@ -2,11 +2,11 @@ config:
   target: 'http://localhost:3000'
   phases:
     - duration: 5 # five seconds
-      arrivalRate: 20 # 20 fake users per second
+      arrivalRate: 100 # 20 fake users per second
     - duration: 5 # five seconds
-      arrivalRate: 40 # 20 fake users per second
+      arrivalRate: 200 # 20 fake users per second
     - duration: 5 # five seconds
-      arrivalRate: 80 # 20 fake users per second
+      arrivalRate: 400 # 20 fake users per second
   processor: './load-test-create-user.js'
 scenarios:
   - name: "Create Users"
