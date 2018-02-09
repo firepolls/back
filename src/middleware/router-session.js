@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import User from '../model/user';
 import { log } from '../lib/util';
 import createError from 'http-errors';
 import Session from '../model/session';
@@ -26,9 +27,9 @@ export default new Router()
       })
       .catch(next);
   })
-  .get('/session', bearerAuth, (request, response, next) => {
+  .get('/sessions', bearerAuth, (request, response, next) => {
     log('__ROUTE__ GET /session');
-    Session.fetchSession(request)
+    User.fetchSessions(request)
       .then(response.json)
       .catch(next);
   })

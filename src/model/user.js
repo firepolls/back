@@ -6,6 +6,8 @@ import { randomBytes } from 'crypto';
 import createError from 'http-errors';
 import Mongoose, { Schema } from 'mongoose';
 
+import Session from './session';
+
 const userSchema = new Schema({
   email: {
     type: String,
@@ -67,5 +69,16 @@ User.create = user => {
       return new User(user).save();
     });
 };
+
+User.fetchSessions = (request) => 
+  User.findById(request.user.id)
+    .populate('sessions')
+    .then(user => {
+      const { sessions } = user;
+      return Promise.all(sessions.map(session =>
+        Session.findById(session.id)
+          .populate('poll')
+      ));
+    });
 
 export default User;
