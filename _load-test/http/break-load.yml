@@ -1,0 +1,17 @@
+config:
+  target: 'https://firepolls-back-production.herokuapp.com'
+  phases:
+    - duration: 40
+      arrivalRate: 1
+      rampTo: 50
+  processor: './load-test-create-user.js'
+scenarios:
+  - name: "Create Users"
+    flow:
+    - function: 'create'
+    - post:
+        url: "/signup"
+        json:
+          username: "{{ username }}"
+          email: "{{ email }}"
+          password: "{{ password }}"

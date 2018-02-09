@@ -10,7 +10,9 @@
     "start": "node index.js",
     "dbon": "mkdir -p ./db && mongod --dbpath ./db",
     "dboff": "killall mongod",
-    "watch": "nodemon"
+    "watch": "nodemon",
+    "test-simple": "artillery run _load-test/http/simple-load.yml -o _load-test/http/results/simple-report.json && artillery report _load-test/http/results/simple-report.json",
+    "test-break": "artillery run _load-test/http/break-load.yml -o _load-test/http/results/break-report.json && artillery report _load-test/http/results/break-report.json"
   },
   "repository": {
     "type": "git",
