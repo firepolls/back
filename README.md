@@ -1,13 +1,13 @@
 <h1 align="center">
-  *Firepolls*
+  Firepolls
   <br>
 </h1>
 
-*Firepolls* is a polling application that provides fast formative actionable data to users in real time.
+Firepolls is a polling application that provides fast formative actionable data to users in real time.
 
 Users can create, join rooms and create polls anonymously. When a user creates a room they can invite other users to join with the room name. Once a room is created the owner can then create polls which are available to other users within the room. If users choose to sign up, they will have access to saved rooms which contain poll results.
 
-*Firepolls* is a fullstack javascript application
+Firepolls is a fullstack javascript application.
 
 ## Build Status
 
@@ -15,12 +15,9 @@ Users can create, join rooms and create polls anonymously. When a user creates a
 [![npm](https://img.shields.io/npm/l/express.svg)](https://github.com/firepolls/back/blob/master/LICENSE)
 ![Contributions welcome](https://img.shields.io/badge/contributions-welcome-green.svg)
 
-Built With
-
 ## Tech / Frameworks
 
-## Back-end:
-
+### Back-end:
 - node.js
     - babel-core
     - babel-preset-env
@@ -43,8 +40,7 @@ Built With
     - nodemon
     - superagent
 
-## Front-end:
-
+### Front-end:
 - node.js
     - babel-core
     - babel-loader
@@ -92,13 +88,13 @@ Built With
     - jest
 
 
-# Hosting
+### Hosting
   - Heroku
 
-# Database
+### Database
   - MongoDB
 
-# Continuous Integration
+### Continuous Integration
   - TravisCI
 
 ## Features
