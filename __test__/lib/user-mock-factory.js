@@ -22,7 +22,7 @@ export const create = () => {
       return User.findById(mock.user._id);
     })
     .then(user => {
-      mock.user = user;
+      mock.user = user;    
       return mock;
     });
 };

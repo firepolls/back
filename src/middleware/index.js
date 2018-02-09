@@ -6,6 +6,7 @@ import catchAll from './catch-all';
 import authRouter from './router-auth';
 import errorHandler from './error-handler';
 import profileRouter from './router-profile';
+import sessionRouter from './router-session';
 import bindResponseMethods from './bind-response-methods';
 
 export default new Router()
@@ -16,6 +17,7 @@ export default new Router()
     }),
     bindResponseMethods,
     authRouter,
+    sessionRouter,
     profileRouter,
     catchAll,
     errorHandler,
