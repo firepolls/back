@@ -22,6 +22,7 @@ describe('router-session.js', () => {
               .set('Authorization', `Bearer ${mock.token}`)
               .send({
                 roomName: faker.random.word(),
+                polls: [],
               });
           })
           .then(response => {
