@@ -11,7 +11,7 @@ const sessionSchema = new Schema({
     required: true,
     unique: true,
   },
-  name: {
+  roomName: {
     type: String,
     required: true,
   },
@@ -19,7 +19,6 @@ const sessionSchema = new Schema({
     type: Date,
     default: () => new Date(),
   },
-  description: String,
   polls: [{
     type: Schema.Types.ObjectId,
     ref: 'poll',
@@ -43,21 +42,14 @@ sessionSchema.methods.addPoll = function (data) {
 };
 
 // method to create new session
-Session.create = request => {  
-  if (!request.body.name || !request.body.description) {
-    return Promise.reject(createError(400, '__ERROR_VALIDATION__ missing session name or description'));
-  }    
-
+Session.create = request => {
   return new Session({
     account_id: request.user._id,
-    name: request.body.name,
-    description: request.body.description,
+    roomName: request.body.roomName,
   })
     .save()
     .then(session => {
-      request.user.session = session._id;
-      console.log(request.user);
-      console.log(session);
+      request.user.sessions.push(session._id);
       return request.user.save()
         .then(() => session);
     });
