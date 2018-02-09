@@ -32,16 +32,4 @@ export default new Router()
     User.fetchSessions(request)
       .then(response.json)
       .catch(next);
-  })
-  .put('/session', bearerAuth, bodyParser(), (request, response, next) => {
-    log('__ROUTE__ PUT /session');
-    Session.update(request)
-      .then(response.json)
-      .catch(next);
-  })
-  .delete('/session', bearerAuth, (request, response, next) => {
-    log('__ROUTE__ DELETE /session');
-    Session.delete(request)
-      .then(response.sendStatus) 
-      .catch(next);
   });
