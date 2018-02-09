@@ -5,9 +5,11 @@ import { log } from './util';
 
 const state = {
   roomMap: {},
-  // Anthony - roomMap: { 'roomName': [RoomObject]}
+  // Anthony - roomMap: { 'roomName': [RoomObject] }
   ownerMap: {},
-  // Anthony - ownerMap: { 'ownerSocketId': 'roomName'}
+  // Anthony - ownerMap: { <ownerSocketId>: 'roomName' }
+  voterMap: {},
+  // Rob - voterMap { <voterSocketId>: 'roomName }
 };
 
 export default (server) => {
@@ -24,13 +26,19 @@ export default (server) => {
 
     client.on('disconnect', () => {
       log('__CLIENT_DISCONNECT__', client.id);
-
+      log(client.adapter);
       // Rob - if disconnecting client owns any rooms, shut down that room
       const ownedRoomName = state.ownerMap[client.id];
+      const votingRoomName = state.voterMap[client.id];
       if (ownedRoomName) {
         state.roomMap[ownedRoomName].closeRoom(state);
+      } else if (votingRoomName) {
+        // Rob - Must send message before leaving room
+        client.broadcast.to(votingRoomName).emit('voter left');
+        client.leave(votingRoomName);
+        delete state.voterMap[client.id];
+        log('__LEAVE_ROOM__', votingRoomName, '__CLIENT__', client.id);
       }
-      // TODO: Rob - if in a room, need to emit an update to all involved to remove the count
     });
 
     // ------------------- OWNER ------------------- \\
@@ -72,6 +80,8 @@ export default (server) => {
         client.broadcast.to(roomName).emit('voter joined');
         // Rob - Send full room object to new voter
         client.emit('room joined', roomToJoin.getRoomForVoter(io));
+        // Rob - Add client to voterMap
+        state.voterMap[client.id] = roomName;
         log('__JOIN_ROOM__', roomName);
       } else {
         log('__JOIN_ROOM_ERROR__', roomName);
@@ -101,6 +111,7 @@ export default (server) => {
       // Rob - Must send message before leaving room
       client.broadcast.to(roomName).emit('voter left');
       client.leave(roomName);
+      delete state.voterMap[client.id];
       log('__LEAVE_ROOM__', roomName, '__CLIENT__', client.id);
     });
   });

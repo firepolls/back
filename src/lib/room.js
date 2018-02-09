@@ -11,14 +11,15 @@ class Room {
   }
 
   addPoll(question) {
-    this.polls.push(new Poll(question));
+    const pollId = this.polls.length;
+    this.polls.push(new Poll(question, pollId));
   }
 
   // Rob - In order for this to work properly, this must be called AFTER Room.addPoll()
   sendNewestPoll() {
     const pollId = this.polls.length - 1;
     const poll = this.polls[pollId];
-    const pollToSend = poll.packagePollForVoter(pollId);
+    const pollToSend = poll.packagePollForVoter();
     this.owner.broadcast.to(this.roomName)
       .emit('poll received', pollToSend);
   }
@@ -36,7 +37,9 @@ class Room {
 
   getRoomForVoter(io) {
     const voters = io.sockets.adapter.rooms[this.roomName].length - 1;
-    return Object.assign({}, this, { owner: false, voters });
+    const room = Object.assign({}, this, { owner: false, voters });
+    delete room.voteMap;
+    return room;
   }
 
   addVote(pollId, vote) {
