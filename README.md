@@ -160,4 +160,4 @@ Want to help? Contribute to our project! Fork our [repo](https://github.com/fire
 
 ## License
 
-MIT © , [Robert Reed](https://github.com/RobertMcReed),  [Pedja Josifovic](https://github.com/pjosifovic),  [Kerry Nordstrom](https://github.com/kerrynordstrom),  [Seth Donohue](https://github.com/SethDonohue),  & [Anthony Robinson](https://github.com/Twandalon)
+MIT ©  [Robert Reed](https://github.com/RobertMcReed),  [Pedja Josifovic](https://github.com/pjosifovic),  [Kerry Nordstrom](https://github.com/kerrynordstrom),  [Seth Donohue](https://github.com/SethDonohue),  & [Anthony Robinson](https://github.com/Twandalon)
