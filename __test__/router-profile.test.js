@@ -66,7 +66,7 @@ describe('router-profile.js', () => {
     describe('GET /profile', () => {
       test('requesting a profile that exists with valid credentials will respond with a 200', () => {
         return profileMockFactory.createWithUser()
-          .then((mock) => {
+          .then((mock) => {            
             return superagent.get(`${process.env.API_URL}/profile`)
               .set('Authorization', `Bearer ${mock.token}`)
               .then(response => {

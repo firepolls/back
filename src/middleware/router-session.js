@@ -28,7 +28,7 @@ export default new Router()
       .catch(next);
   })
   .get('/sessions', bearerAuth, (request, response, next) => {
-    log('__ROUTE__ GET /session');
+    log('__ROUTE__ GET /sessions');
     User.fetchSessions(request)
       .then(response.json)
       .catch(next);
