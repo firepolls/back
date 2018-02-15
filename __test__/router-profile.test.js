@@ -142,13 +142,26 @@ describe('router-profile.js', () => {
 
   describe('DELETE', () => {
     describe('DELETE /profile', () => {
-      test('updating a profile without a required field will return a 204', () => {
+      test('deleting profile with valid credentials will return 204 status code', () => {
         return profileMockFactory.createWithUser()
           .then((mock) => {
             return superagent.delete(`${process.env.API_URL}/profile`)
               .set('Authorization', `Bearer ${mock.token}`)
-              .then(response => {
+              .then(response => {                
                 expect(response.status).toEqual(204);
+              });
+          });
+      });
+
+      test('deleting profile with invalid credentials will return 401 status code', () => {
+        return profileMockFactory.createWithUser()
+          .then((mock) => {
+            const invalidToken = 'invalidToken';
+            return superagent.delete(`${process.env.API_URL}/profile`)
+              .set('Authorization', `Bearer ${invalidToken}`)
+              .then(Promise.reject)
+              .catch(response => {                
+                expect(response.status).toEqual(401);
               });
           });
       });

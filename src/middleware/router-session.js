@@ -39,8 +39,8 @@ export default new Router()
       .then(response.json)
       .catch(next);
   })
-  .delete('/session', bearerAuth, (request, response, next) => {
-    log('__ROUTE__ DELETE /session');
+  .delete('/sessions/:id', bearerAuth, (request, response, next) => {
+    log('__ROUTE__ DELETE /sessions/:id');
     Session.delete(request)
       .then(response.sendStatus) 
       .catch(next);
