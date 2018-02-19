@@ -28,7 +28,7 @@ export default new Router()
       .catch(next);
   })
   .get('/sessions', bearerAuth, (request, response, next) => {
-    log('__ROUTE__ GET /session');
+    log('__ROUTE__ GET /sessions');
     User.fetchSessions(request)
       .then(response.json)
       .catch(next);
@@ -39,8 +39,8 @@ export default new Router()
       .then(response.json)
       .catch(next);
   })
-  .delete('/session', bearerAuth, (request, response, next) => {
-    log('__ROUTE__ DELETE /session');
+  .delete('/sessions/:id', bearerAuth, (request, response, next) => {
+    log('__ROUTE__ DELETE /sessions/:id');
     Session.delete(request)
       .then(response.sendStatus) 
       .catch(next);

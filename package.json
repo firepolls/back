@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jest -i --coverage",
     "test-w": "jest -i --coverage --watch",
+    "test-s": "jest -i --coverage router-session.test.js",
     "lint": "eslint .",
     "start": "node index.js",
     "dbon": "mkdir -p ./db && mongod --dbpath ./db",
