@@ -76,7 +76,7 @@ Session.update = request => {
   )
     .then(session => {
       if (!session) {
-        return Promise.reject(createError(400, '__ERROR__ session not found'));
+        return Promise.reject(createError(404, '__ERROR__ session not found'));
       }
 
       return session;
@@ -85,7 +85,7 @@ Session.update = request => {
 
 // delete session
 Session.delete = request => {
-  return Session.findByIdAndRemove(request.user.session)
+  return Session.findByIdAndRemove(request.user.sessions._id)
     .then(() => 204);
 };
 
