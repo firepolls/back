@@ -14,8 +14,8 @@ export default new Router()
     Session.create(request)
       .then(session => {
         sessionObject = session;
-        return Promise.all(request.body.polls
-          .map(poll => session.addPoll(poll)));
+
+        return session.addPolls(request.body.polls);
       })
       .then(polls => {
         const { roomName } = sessionObject;

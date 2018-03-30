@@ -28,13 +28,15 @@ const sessionSchema = new Schema({
 });
 
 // add poll helper function
-sessionSchema.methods.addPoll = function (poll) {
-  poll.session_id = this._id;
-  return Poll.create(poll)
-    .then(pollDocument => {
-      this.polls.push(pollDocument._id);
+sessionSchema.methods.addPolls = function (polls) {
+  return Promise.all(polls.map(poll => {
+    poll.session_id = this._id;
+    return Poll.create(poll);
+  }))
+    .then(pollDocuments => {
+      this.polls = pollDocuments.map(poll => poll._id);
       return this.save()
-        .then(() => pollDocument);
+        .then(() => pollDocuments);
     });
 };
 
