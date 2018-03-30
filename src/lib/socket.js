@@ -26,7 +26,7 @@ export default (server) => {
 
     client.on('disconnect', () => {
       log('__CLIENT_DISCONNECT__', client.id);
-      log(client.adapter);
+
       // Rob - if disconnecting client owns any rooms, shut down that room
       const ownedRoomName = state.ownerMap[client.id];
       const votingRoomName = state.voterMap[client.id];

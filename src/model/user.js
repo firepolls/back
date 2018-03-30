@@ -72,13 +72,12 @@ User.create = user => {
 
 User.fetchSessions = (request) => 
   User.findById(request.user.id)
-    .populate('sessions')
-    .then(user => {
-      const { sessions } = user;
-      return Promise.all(sessions.map(session =>
-        Session.findById(session.id)
-          .populate('poll')
-      ));
-    });
+    .populate({
+      path: 'sessions',
+      populate: {
+        path: 'polls',
+      },
+    })
+    .then(({ sessions }) => sessions);
 
 export default User;
