@@ -4,7 +4,6 @@ import createError from 'http-errors';
 import Mongoose, { Schema } from 'mongoose';
 
 import Session from './session';
-import { log } from '../lib/util';
 
 const pollSchema = new Schema({
   session_id: {
