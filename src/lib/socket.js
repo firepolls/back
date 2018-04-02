@@ -13,13 +13,8 @@ const state = {
 };
 
 export default (server) => {
-  const options = {
-    origins: process.env.CORS_ORIGIN,
-  };
-
-  // Rob - Only allow connections from OUR front end when in production
-  const io = process.env.DEBUG === 'true' ?
-    socketIO(server) : socketIO(server, options);
+  // Rob - Open the socket
+  const io = socketIO(server);
 
   io.on('connection', client => {
     log('__CLIENT_CONNECT__', client.id);
