@@ -42,8 +42,9 @@ export default (server) => {
     // ------------------- OWNER ------------------- \\
     client.on('create room', roomNameRaw => {
       const roomName = formatRoomName(roomNameRaw);
-
-      if (state.roomMap[roomName]) {
+      // Rob - The "roomName" below is required so that you can't create rooms
+      //     - that don't have any valid chars
+      if (!roomName || state.roomMap[roomName]) {
         log('__CREATE_ROOM_ERROR__', roomNameRaw);
         // Rob - formatted room name already taken, send raw name back
         client.emit('room status', { type: 'create', roomName: roomNameRaw });
