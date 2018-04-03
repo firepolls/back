@@ -18,10 +18,11 @@ export default new Router()
         return session.addPolls(request.body.polls);
       })
       .then(polls => {
-        const { roomName } = sessionObject;
+        const { roomName, roomNameRaw } = sessionObject;
         const savedRoom = {
           polls,
           roomName,
+          roomNameRaw,
         };
         return response.json(savedRoom);
       })
