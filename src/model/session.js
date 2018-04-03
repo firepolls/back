@@ -14,6 +14,10 @@ const sessionSchema = new Schema({
     type: String,
     required: true,
   },
+  roomNameRaw: {
+    type: String,
+    required: true,
+  },
   timestamp: {
     type: Date,
     default: () => new Date(),
@@ -47,6 +51,7 @@ Session.create = request => {
   return new Session({
     account_id: request.user._id,
     roomName: request.body.roomName,
+    roomNameRaw: request.body.roomNameRaw,
   })
     .save()
     .then(session => {

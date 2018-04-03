@@ -8,3 +8,6 @@ export const log = (...args) =>
   process.env.DEBUG === 'true' ? console.log(...args) : undefined;
 
 export const daysToMilliseconds = days => days * 24 * 60 * 60 * 1000;
+
+// Rob - Remove all non-letters/numbers
+export const formatRoomName = roomName => roomName.replace(/[\W_]/g, '').toLowerCase();
