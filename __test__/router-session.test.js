@@ -22,6 +22,7 @@ describe('router-session.js', () => {
               .set('Authorization', `Bearer ${mock.token}`)
               .send({
                 roomName: faker.random.word(),
+                roomNameRaw: faker.random.word(),
                 polls: [],
               });
           })
@@ -37,6 +38,7 @@ describe('router-session.js', () => {
               .set('Authorization', `Bearer ${mock.token}`)
               .send({
                 roomName: null,
+                roomNameRaw: null,
                 polls: [],
               });
           })
@@ -52,6 +54,7 @@ describe('router-session.js', () => {
             return superagent.post(`${process.env.API_URL}/session`)
               .send({
                 roomName: faker.random.word(),
+                roomNameRaw: faker.random.word(),
                 polls: [],
               });
           })
