@@ -2,11 +2,13 @@ import Poll from './poll';
 import { log } from '../lib/util';
 
 class Room {
-  constructor(socket, roomName) {
+  constructor(socket, roomName, roomNameRaw) {
+    this.polls = [];
     this.owner = socket;
     this.roomName = roomName;
-    this.polls = [];
+    this.roomNameRaw = roomNameRaw;
 
+    // Rob - Create room under the formatted roomName
     socket.join(roomName);
   }
 
@@ -36,6 +38,7 @@ class Room {
   }
 
   getRoomForVoter(io) {
+    // Rob - Add the current number of voters to the room
     const voters = io.sockets.adapter.rooms[this.roomName].length - 1;
     const room = Object.assign({}, this, { owner: false, voters });
     delete room.voteMap;

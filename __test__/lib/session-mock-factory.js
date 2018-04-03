@@ -14,6 +14,7 @@ export const createWithUser = () => {
       return new Session({
         account_id: userData.user.id,
         roomName: faker.random.word(),
+        roomNameRaw: faker.random.word(),
         polls: [],
       }).save()
         .then(session => {
