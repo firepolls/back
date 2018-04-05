@@ -27,14 +27,15 @@ class Room {
   }
 
   closeRoom(state) {
-    this.owner.broadcast.to(this.roomName)
-      .emit('room closed', this.roomName);
-    this.owner.leave(this.roomName);
+    const { roomName, roomNameRaw } = this;
+    this.owner.broadcast.to(roomName)
+      .emit('room closed', { roomName, roomNameRaw });
+    this.owner.leave(roomName);
 
     // Rob - remove owner from state.ownerMap
     //     - remove room from state.roomMap
     delete state.ownerMap[this.owner.id];
-    delete state.roomMap[this.roomName];
+    delete state.roomMap[roomName];
   }
 
   getRoomForVoter(io) {
