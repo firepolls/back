@@ -12,7 +12,7 @@ export default new Router()
     User.create(request.body)
       .then(user => user.createToken())
       .then(token => {
-        response.cookie('Socket-Token', token, { maxAge: 900000 });
+        response.cookie('Socket-Token', token, { maxAge: 900000, domain: '.firepolls.com' });
         response.send(token);
       })
       .catch(next);
@@ -21,7 +21,7 @@ export default new Router()
     log('__ROUTE__ GET /login');
     request.user.createToken()
       .then(token => {
-        let cookieOptions = { maxAge: daysToMilliseconds(15) };
+        let cookieOptions = { maxAge: daysToMilliseconds(15), domain: '.firepolls.com' };
         response.cookie('Socket-Token', token, cookieOptions);
         response.send(token);
       })
